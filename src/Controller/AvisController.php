@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AvisController extends AbstractController
 {
-    #[Route('/avis/new/{type<acteur|film|serie>}/{id}', name: 'app_avis_new')]
+    #[Route('/avis/new/{type}/{id}', name: 'app_avis_new')]
     #[IsGranted("ROLE_USER")]
     public function new($id,$type,Request $request, EntityManagerInterface $entityManager)
     {

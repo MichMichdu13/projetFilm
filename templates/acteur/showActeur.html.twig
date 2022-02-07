@@ -48,7 +48,7 @@
 
                 </div>
             {% endfor %}
-            <a href="{{ path('app_avis_new' , {'id': acteur.id , 'type': 'acteur'})}}" class="btn btn-dark">Rajouter un avis</a>
+            <a href="{{ path('app_avis_new' , { 'type': 'acteur','id': acteur.id })}}" class="btn btn-dark">Rajouter un avis</a>
          </div>
         <h3>Ses plus grands films</h3>
         <div class="answer">
