@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}" >
+{% endblock %}
+{% block body %}
+
+        <div id="searchbox">
+            {{ form_start(form) }}
+            {{ form_row(form.recherche) }}
+            <input id= "button-submit" type="submit" value= "" />
+            {{ form_end(form)}}
+        </div>
+    <h1>Votre Recherche</h1>
+    <div class="containerFilm">
+        {% for film in search.results %}
+            {% if film.resultType == "Title" %}
+                {% if "(TV Series)" in film.description %}
+                    <a href="{{ path('app_film_show', {"type":"serie","id_film": film.id}) }}" class="btnFilm">
+                        <div class="affichageFilm" style="background-image: url({{ film.image }})">
+                            <div class="affichageFilmContainer">
+                                <h3>{{ film.title }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                {% else%}
+                    <a href="{{ path('app_film_show', {"type":"film","id_film": film.id}) }}" class="btnFilm">
+                        <div class="affichageFilm" style="background-image: url({{ film.image }})">
+                            <div class="affichageFilmContainer">
+                                <h3>{{ film.title }}</h3>
+                            </div>
+                        </div>
+                    </a>
+                {% endif%}
+            {% elseif film.resultType == "Name" %}
+                <a href="{{ path('app_acteur_show', {"id_acteur": film.id}) }}" class="btnFilm">
+                    <div class="affichageFilm" style="background-image: url({{ film.image }})">
+                        <div class="affichageFilmContainer">
+                            <h3>{{ film.title }}</h3>
+                        </div>
+
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+        <div class="containerShowFilm">
+            <h1 class="titreFilm">{{ film.title }}</h1>
+            <div class="containerShowContente">
+                <img src="{{ film.image }}" alt="Affiche {{ film.title }}">
+                <div class="contenueFilmTxt">
+                    <p>Date de sortie: {{ film.releaseDate|date('d/m/Y') }}</p>
+                    <p>Durée: {{ film.runtimeStr }}</p>
+                    <p>Description: {{ film.plot }}</p>
+                    <div class="real">
+                        <p>Realisateur: </p>
+                        {% for real in film.directorList %}
+                            <a href="{{ path('app_acteur_show', {"id_acteur": real.id}) }}" ><p>{{ real.name }} </p></a>
+                        {% endfor %}
+                    </div>
+                    {% if film.type == "Movie" %}
+                        <a href="{{ path('app_film_fav',{"type":"film","filmId": film.id, "filmImage": film.image, "filmTitle":film.title}) }}" class="btn btn-dark">Mettre en favorie</a>
+                    {% else %}
+                        <a href="{{ path('app_film_fav',{"type":"serie","filmId": film.id, "filmImage": film.image, "filmTitle":film.title}) }}" class="btn btn-dark">Mettre en favorie</a>
+                    {% endif %}
+                <div class="containerStar">
+                    <div class="starBlack"></div>
+                    <div class="starGold" id="starGold" style="width: {{ starRate }}%"></div>
+                    {% if film.type == "Movie" %}
+                        <a href="{{ path('rate',{"id":film.id,"type":"film","rateChoice":"1","img":film.image,"name":film.title}) }}" id="rate1"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"film","rateChoice":"2","img":film.image,"name":film.title}) }}" id="rate2"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"film","rateChoice":"3","img":film.image,"name":film.title}) }}" id="rate3"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"film","rateChoice":"4","img":film.image,"name":film.title}) }}" id="rate4"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"film","rateChoice":"5","img":film.image,"name":film.title}) }}" id="rate5"></a>
+                    {% else %}
+                        <a href="{{ path('rate',{"id":film.id,"type":"serie","rateChoice":"1","img":film.image,"name":film.title}) }}" id="rate1"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"serie","rateChoice":"2","img":film.image,"name":film.title}) }}" id="rate2"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"serie","rateChoice":"3","img":film.image,"name":film.title}) }}" id="rate3"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"serie","rateChoice":"4","img":film.image,"name":film.title}) }}" id="rate4"></a>
+                        <a href="{{ path('rate',{"id":film.id,"type":"serie","rateChoice":"5","img":film.image,"name":film.title}) }}" id="rate5"></a>
+                    {% endif %}
+                </div>
+                </div>
+            </div>
+            <div class="avis">
+                <h3>AVIS</h3>
+                {% for avi in avis %}
+                        <div class="containerAvis">
+                            <h4>{{ avi.titreAvis }}</h4>
+                            <p>{{ avi.avisText }} --- {{ avi.idUser.FirstName }} {{ avi.idUser.LastName }}</p>
+                            <p>{{ avi.dateAvis | date('d/m/Y')}}</p>
+                        </div>
+                {% endfor %}
+                <a href="{{ path('app_avis_new' , {'id': film.id,'type':"film"} )}}" class="btn btn-dark">Rajouter un avis</a>
+            </div>
+            <h3>Acteurs</h3>
+            <div class="answer">
+                {% for actor in film.actorList %}
+                    <a href="{{ path('app_acteur_show', {"id_acteur": actor.id}) }}" class="btnFilm">
+                        <div class="affichageFilm" style="background-image: url({{ actor.image }})">
+                            <div class="affichageFilmContainer">
+                                <h3>{{ actor.name }}</h3>
+                                <p>"{{ actor.asCharacter }}"</p>
+                            </div>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+            <h3>Autres Titres</h3>
+            <div class="answer">
+                {% for filmSame in film.similars %}
+                    <a href="{{ path('app_film_show', {"type": "film","id_film": filmSame.id}) }}" class="btnFilm">
+                        <div class="affichageFilm" style="background-image: url({{ filmSame.image }})">
+                            <div class="affichageFilmContainer">
+                                <h3>{{ filmSame.title }}</h3>
+                            </div>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+{% block title %}Votre Profile{% endblock %}
+{% block body %}
+    <div class="containerProfil mt-4 mb-4 p-3 d-flex justify-content-center">
+        <div class="card p-4">
+            <div class=" image d-flex flex-column justify-content-center align-items-center">
+                <button class="btn btn-secondary"> <img src="{{ app.user.imgProfil }}" height="100" width="100" /></button>
+                <span class="name mt-3">{{ app.user.FirstName }} {{ app.user.LastName }}</span>
+                <div class=" px-2 rounded mt-4 date "> <span class="join">Prénom: {{ app.user.FirstName }}</span> </div>
+                <div class=" px-2 rounded mt-4 date "> <span class="join">Nom: {{ app.user.LastName }}</span> </div>
+                <div class=" px-2 rounded mt-4 date "> <span class="join">Email: {{ app.user.email }}</span> </div>
+                <div class=" px-2 rounded mt-4 date "> <span class="join">{{ app.user.roles[0] }}</span> </div>
+                <div class=" px-2 rounded mt-4 date "> <span class="join"><a href="{{ path('app_logout') }}">Logout</a></span></div>
+                <div class=" d-flex mt-2"> <a href="{{ path('app_profile_edit') }}"><button class="btn1 btn-dark">Edit Profile</button></a> </div>
+            </div>
+        </div>
+    </div>
+    <div class="containerShowFilm">
+        <h3>Acteurs Favoris</h3>
+        <div class="answer">
+            {% for acteur in acteurs %}
+                <a href="{{ path('app_acteur_show', {"id_acteur": acteur.idActeur}) }}" class="btnFilm">
+                    <div class="affichageFilm" style="background-image: url({{ acteur.imageActeur }})">
+                        <div class="affichageFilmContainer">
+                            <h3>{{ acteur.nameActeur }}</h3>
+                        </div>
+
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <h3>Films/Series Favoris</h3>
+        <div class="answer">
+            {% for film in films %}
+                <a href="{{ path('app_film_show', {"type":"film","id_film": film.idFilm}) }}" class="btnFilm">
+                    <div class="affichageFilm" style="background-image: url({{ film.imgFilm }})">
+                        <div class="affichageFilmContainer">
+                            <h3>{{ film.titreFilm }}</h3>
+                        </div>
+
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

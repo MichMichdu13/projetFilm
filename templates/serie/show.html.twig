@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}" >
+{% endblock %}
+{% block body %}
+    <div id="searchbox">
+        {{ form_start(form) }}
+        {{ form_row(form.recherche) }}
+        <input id= "button-submit" type="submit" value= "" />
+        {{ form_end(form)}}
+    </div>
+    <h1 class="titleHome">Les meilleurs series</h1>
+    <div class="containerFilm">
+        {% for serie in series.items %}
+            <a href="{{ path('app_film_show',{"type": "serie","id_film": serie.id}) }}" class="btnFilm">
+                <div class="affichageFilm" style="background-image: url({{ serie.image }})">
+                    <div class="affichageFilmContainer">
+                        <h3>{{ serie.title }}</h3>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

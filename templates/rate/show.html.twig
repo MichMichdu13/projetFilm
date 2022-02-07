@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}" >
+{% endblock %}
+{% block body %}
+    <div id="searchbox">
+        {{ form_start(form) }}
+        {{ form_row(form.recherche) }}
+        <input id= "button-submit" type="submit" value= "" />
+        {{ form_end(form)}}
+    </div>
+    <h1 class="titleHome">Les Films les mieux notés</h1>
+    <div class="containerFilm">
+        {% for film in films %}
+            <a href="{{ path('app_film_show',{"type": "film", "id_film": film.id}) }}" class="btnFilm">
+                <div class="affichageFilm" style="background-image: url({{ film.img }})">
+                    <div class="affichageFilmContainer">
+                        <h3>{{ film.nameFilm }}</h3><br>
+                        <p class="noteAffichage">{{ film.MoyenneRate }}</p>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Crée un compte</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.FirstName) }}
+    {{ form_row(form.LastName) }}
+    <button type="submit">Envoyer</button>
+    {{ form_row(form._token) }}
+    {{ form_end(form, {render_rest:false})}}
+    <br>
+    <a href="{{ path('app_login') }}">Si vous deja un compte conecter vous !</a>
+{% endblock %}
